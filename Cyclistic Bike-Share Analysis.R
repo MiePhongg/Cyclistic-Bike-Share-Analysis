@@ -8,8 +8,8 @@ conflict_prefer("lag", "dplyr")
 
 #Truyền thư viện đọc và đọc table data
 library(readr)
-Divvy_Trips_2019_Q1_1_ <- read_csv("Divvy_Trips_2019_Q1  (1).csv")
-Divvy_Trips_2020_Q1 <- read_csv("Divvy_Trips_2020_Q1.csv")
+Divvy_Trips_2019_Q1_1_ <- read_csv("E:/R_Case Study 1/Cyclistic-Bike-Share-Analysis/Divvy_Trips_2019_Q1  (1).csv")
+Divvy_Trips_2020_Q1 <- read_csv("E:/R_Case Study 1/Cyclistic-Bike-Share-Analysis/Divvy_Trips_2020_Q1.csv")
 
 
 #So sánh tên bảng
@@ -121,13 +121,20 @@ aggregate(all_trips_v2$ride_length ~ all_trips_v2$member_casual, FUN = min)
 aggregate(all_trips_v2$ride_length ~ all_trips_v2$member_casual + all_trips_v2$day_of_week,
           FUN = mean)
 
-#Kiểm tra giá trị thực tế của cột 
-unique(all_trips_v2$day_of_week)
+
 
 # Khi truyền vào giá trị nó chuyển NA, chưa fix được
-all_trips_v2$day_of_week <- ordered(all_trips_v2$day_of_week, levels=c("Sun", "Mon",
-                                                                       "Tues", "Wednes", 
-                                                                       "Thurs", "Fri", "Satur"))
+library(lubridate)
+
+# Tạo cột weekday với nhãn tiếng Anh viết tắt
+all_trips_v2$weekday <- wday(all_trips_v2$started_at, label = TRUE, abbr = TRUE)
+
+# Sắp xếp lại thứ tự từ Monday đến Sunday
+all_trips_v2$weekday <- factor(all_trips_v2$weekday,
+                               levels = c("Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"),
+                               ordered = TRUE)
+
+unique(all_trips_v2$weekday)
 
 
 # analyze ridership data by type and weekday
@@ -142,6 +149,7 @@ all_trips_v2 %>%
     average_duration = mean(ride_length, na.rm = TRUE)
   ) %>%
   arrange(member_casual, weekday)
+
 
 
 # analyze ridership data by type and weekday
@@ -166,8 +174,10 @@ all_trips_v2 %>%
   geom_col(position = "dodge")
 
 #Xuất file
-counts <- aggregate(all_trips_v2$ride_length ~ all_trips_v2$member_casual +
-                      all_trips_v2$day_of_week, FUN = mean)
+counts <- all_trips_v2 %>%
+  group_by(member_casual, day_of_week) %>%
+  summarise(avg_ride_length = mean(ride_length, na.rm = TRUE))
+
 
 
 # Xuất file vào Desktop

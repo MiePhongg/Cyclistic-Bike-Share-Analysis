@@ -1,15 +1,3 @@
-"all_trips_v2$member_casual","all_trips_v2$day_of_week","all_trips_v2$ride_length"
-"casual","Chủ Nhật",5061.30436414326
-"member","Chủ Nhật",972.938335797465
-"casual","Thứ Ba",4561.80385720148
-"member","Thứ Ba",769.441628768344
-"casual","Thứ Bảy",4950.77080086098
-"member","Thứ Bảy",974.072963829465
-"casual","Thứ Hai",4752.05043820426
-"member","Thứ Hai",822.311201666214
-"casual","Thứ Năm",8451.66685322513
-"member","Thứ Năm",707.209274283707
-"casual","Thứ Sáu",6090.73730188444
-"member","Thứ Sáu",796.733788899694
-"casual","Thứ Tư",4480.37243172952
-"member","Thứ Tư",711.983790257748
+"member_casual","day_of_week","avg_ride_length"
+"casual",NA,5372.78387377167
+"member",NA,795.252339264097
