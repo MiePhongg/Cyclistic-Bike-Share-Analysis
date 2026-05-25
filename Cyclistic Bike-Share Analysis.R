@@ -198,10 +198,7 @@ all_trips_v2 %>%
 
 
 # ── CASE 2: Average Ride Duration by Weekday & Member Type ──────────────────
-# Insight: Casual riders take trips ~2x longer than members every single day
-# FIX (CRITICAL): Y-axis now shows MINUTES not seconds — was unreadable before
-# FIX: Subtitle updated to include the key number (22 min vs 12 min)
-# Portfolio note: move this chart to ANALYZE slide, not Act
+
 
 all_trips_v2 %>%
   mutate(weekday = wday(started_at, label = TRUE, abbr = TRUE, week_start = 1)) %>%
@@ -218,7 +215,6 @@ all_trips_v2 %>%
     x        = "Day of Week",
     y        = "Average Duration (minutes)",   # <-- FIXED: seconds → minutes
     fill     = "Member Type",
-    caption  = "Source: Cyclistic Historical Trip Data 2019–2020 Q1"
   ) +
   theme_minimal(base_size = 13)
 
